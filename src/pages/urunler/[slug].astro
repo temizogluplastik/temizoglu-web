@@ -1,0 +1,132 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { catalogs, metrics } from '../../data/catalogs';
+import { helpers } from '../../data/site';
+
+export function getStaticPaths() {
+  return catalogs.map((c) => ({ params: { slug: c.slug }, props: { catalog: c } }));
+}
+const { catalog } = Astro.props;
+const others = catalogs.filter((c) => c.slug !== catalog.slug);
+
+const seo = {
+  title: `${catalog.title} | Temizoğlu Plastik`,
+  description: catalog.heroDesc,
+  path: `/urunler/${catalog.slug}`,
+};
+---
+
+<BaseLayout seo={seo}>
+  <main>
+    <!-- ================= BANNER ================= -->
+    <section class="bg-surface-container-low border-b border-outline-variant/30 py-8">
+      <div class="max-w-7xl mx-auto px-6">
+        <nav class="flex items-center gap-2 text-body-sm font-body-sm text-on-surface-variant mb-4">
+          <a class="hover:text-secondary transition-colors" href="/">Ana Sayfa</a>
+          <span class="material-symbols-outlined text-outline-variant text-[16px]">chevron_right</span>
+          <a class="hover:text-secondary transition-colors" href="/urunler">Ürünlerimiz</a>
+          <span class="material-symbols-outlined text-outline-variant text-[16px]">chevron_right</span>
+          <span class="text-on-surface font-medium">{catalog.navLabel}</span>
+        </nav>
+        <div class="max-w-4xl">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-secondary/10 border border-secondary/30 text-secondary mb-3">
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+            <span class="text-label-caps font-label-caps uppercase tracking-wider">{catalog.category}</span>
+          </div>
+          <h1 class="text-headline-xl font-headline-xl text-primary mb-3">{catalog.title}</h1>
+          <p class="text-body-lg font-body-lg text-on-surface-variant max-w-3xl">{catalog.heroDesc}</p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-6 border-t border-outline-variant/30">
+          {metrics.map((m) => (
+            <div class="bg-surface-container-lowest p-3.5 rounded border border-outline-variant/40 flex items-center gap-3">
+              <span class="material-symbols-outlined text-secondary text-2xl">{m.icon}</span>
+              <div>
+                <span class="block text-headline-sm font-headline-sm text-primary">{m.title}</span>
+                <span class="block text-label-sm font-label-sm text-on-surface-variant">{m.sub}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+    <!-- ================= ÜRÜN DETAY ================= -->
+    <section class="max-w-7xl mx-auto px-6 py-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="relative bg-surface-container rounded-lg border border-outline-variant/50 overflow-hidden h-[420px] flex items-center justify-center">
+          <img alt={catalog.imageAlt} class="w-full h-full object-cover" src={catalog.image} />
+          <div class="absolute top-4 left-4 flex flex-wrap gap-2">
+            <span class="px-3 py-1 rounded bg-secondary/85 backdrop-blur-md text-on-primary text-label-caps font-label-caps border border-white/20">{catalog.imageBadges[0]}</span>
+            <span class="px-3 py-1 rounded bg-primary/85 backdrop-blur-md text-on-primary text-label-caps font-label-caps border border-white/20">{catalog.imageBadges[1]}</span>
+          </div>
+          <div class="absolute bottom-4 right-4 bg-surface-container-lowest/90 backdrop-blur-md px-3 py-1.5 rounded text-label-sm font-label-sm border border-outline-variant/40 text-on-surface">Model: {catalog.model}</div>
+        </div>
+        <div class="flex flex-col justify-center">
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="text-label-caps font-label-caps text-secondary uppercase">{catalog.category}</span>
+            <span class="text-label-sm font-label-sm text-on-surface-variant font-mono">{catalog.pill}</span>
+          </div>
+          <h2 class="text-headline-lg font-headline-lg text-primary mb-3">{catalog.title}</h2>
+          <p class="text-body-md font-body-md text-on-surface-variant mb-6">{catalog.heroDesc}</p>
+          <div class="bg-surface-container-low p-5 rounded-lg border border-outline-variant/30 text-body-sm font-body-sm space-y-3 mb-6">
+            {catalog.specs.map((s, i) => (
+              <div class={`flex justify-between gap-4 py-1 ${i < catalog.specs.length - 1 ? 'border-b border-outline-variant/20' : ''}`}>
+                <span class="text-on-surface-variant">{s.label}</span>
+                <span class="font-semibold text-on-surface text-right">{s.value}</span>
+              </div>
+            ))}
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <a href={`${helpers.wa}?text=${encodeURIComponent(`Merhaba, ${catalog.title} (${catalog.model}) ürünü için toptan fiyat teklifi almak istiyorum.`)}`} target="_blank" rel="noopener" class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-on-primary hover:bg-on-surface transition-colors rounded text-label-md font-label-md">
+              <span class="material-symbols-outlined text-sm">request_quote</span>Toptan Teklif Al</a>
+            <a href="/#teklif-al" class="inline-flex items-center justify-center gap-2 px-6 py-3 border border-outline-variant hover:bg-surface-container transition-colors rounded text-label-md font-label-md text-on-surface">
+              <span class="material-symbols-outlined text-sm text-secondary">edit_note</span>Teklif Formunu Doldur</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ================= DİĞER KATALOGLAR ================= -->
+    <section class="max-w-7xl mx-auto px-6 pb-10">
+      <div class="flex items-center justify-between gap-4 mb-6">
+        <h2 class="text-headline-lg font-headline-lg text-primary">Diğer Ürün Katalogları</h2>
+        <a href="/urunler" class="inline-flex items-center gap-1 text-label-md font-label-md text-secondary hover:text-on-surface transition-colors">Tümünü Gör<span class="material-symbols-outlined text-sm">arrow_forward</span></a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {others.map((c) => (
+          <a href={`/urunler/${c.slug}`} class="group bg-surface-container-lowest rounded border border-outline-variant/50 overflow-hidden hover:border-secondary/50 hover:shadow-md transition-all flex">
+            <div class="w-28 shrink-0 bg-surface-container h-full overflow-hidden">
+              <img alt={c.imageAlt} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src={c.image} loading="lazy" />
+            </div>
+            <div class="p-4 flex flex-col justify-center">
+              <span class="text-label-caps font-label-caps text-secondary uppercase mb-1">{c.category}</span>
+              <span class="text-headline-sm font-headline-sm text-primary group-hover:text-secondary transition-colors">{c.title}</span>
+              <span class="text-label-sm font-label-sm text-on-surface-variant mt-1">Model: {c.model}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- ================= CTA BANNER ================= -->
+    <section class="max-w-7xl mx-auto px-6 py-12">
+      <div class="bg-primary-container rounded-xl p-8 md:p-12 text-on-primary border border-outline-variant/20 relative overflow-hidden shadow-lg">
+        <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-secondary/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-8">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-secondary-fixed/20 border border-secondary-fixed/40 text-secondary-fixed mb-4">
+              <span class="material-symbols-outlined text-sm">factory</span>
+              <span class="text-label-caps font-label-caps">Müşteriye Özel Üretim Hattı</span>
+            </div>
+            <h2 class="text-headline-xl font-headline-xl mb-4 leading-tight">Özel Ebat veya Baskılı Üretim mi İstiyorsunuz?</h2>
+            <p class="text-body-lg font-body-lg text-inverse-on-surface/90 max-w-2xl leading-relaxed">Fabrikamızda istediğiniz renk, mikron ve baskı özelliklerinde aylık <strong>1.500 ton</strong> ekstrüzyon ve konfeksiyon kapasitesiyle özel sipariş üretiyoruz.</p>
+          </div>
+          <div class="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3.5">
+            <a class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-secondary text-on-secondary hover:bg-on-secondary-container transition-all rounded font-label-md text-label-md text-center shadow-md" href="/#teklif-al">
+              <span class="material-symbols-outlined">request_quote</span>Özel Üretim Teklifi Al</a>
+            <a class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-surface-container-lowest text-on-surface hover:bg-surface transition-all rounded font-label-md text-label-md text-center" href="https://wa.me/905425115705">
+              <span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">chat</span>WhatsApp Satış Hattı</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

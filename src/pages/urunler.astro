@@ -1,0 +1,164 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { catalogs, metrics, facilityBadge } from '../data/catalogs';
+
+const seo = {
+  title: 'Ürün Kataloğu & Teknik Spesifikasyonlar | Temizoğlu Plastik',
+  description:
+    'Özel baskılı poşetlerden geri dönüşüm granüllerine kadar tüm plastik ambalaj çözümlerimizi teknik ölçüleri, mikron kalınlıkları ve sertifika detayları ile inceleyin.',
+  path: '/urunler',
+};
+---
+
+<BaseLayout seo={seo}>
+  <main>
+    <!-- ================= HERO / KATALOG BANNER ================= -->
+    <section class="bg-surface-container-low border-b border-outline-variant/30 py-8">
+      <div class="max-w-7xl mx-auto px-6">
+        <nav class="flex items-center gap-2 text-body-sm font-body-sm text-on-surface-variant mb-4">
+          <a class="hover:text-secondary transition-colors" href="/">Ana Sayfa</a>
+          <span class="material-symbols-outlined text-outline-variant text-[16px]">chevron_right</span>
+          <span class="text-on-surface font-medium">Ürünlerimiz</span>
+        </nav>
+        <div class="max-w-4xl">
+          <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-secondary/10 border border-secondary/30 text-secondary mb-3">
+            <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">verified</span>
+            <span class="text-label-caps font-label-caps uppercase tracking-wider">{facilityBadge}</span>
+          </div>
+          <h1 class="text-headline-xl font-headline-xl text-primary mb-3">Endüstriyel Ürün Kataloğu & Ambalaj Çözümleri</h1>
+          <p class="text-body-lg font-body-lg text-on-surface-variant max-w-3xl">
+            4 ana kategoride toptan ve kurumsal üretim. Aşağıdaki sekmelerden ürün grubunu filtreleyin veya "Kataloğu İncele" ile detay sayfasına gidin.
+          </p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-6 border-t border-outline-variant/30">
+          {metrics.map((m) => (
+            <div class="bg-surface-container-lowest p-3.5 rounded border border-outline-variant/40 flex items-center gap-3">
+              <span class="material-symbols-outlined text-secondary text-2xl">{m.icon}</span>
+              <div>
+                <span class="block text-headline-sm font-headline-sm text-primary">{m.title}</span>
+                <span class="block text-label-sm font-label-sm text-on-surface-variant">{m.sub}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FILTER + CARDS ================= -->
+    <section class="max-w-7xl mx-auto px-6 py-10" id="urunler">
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
+        <div class="max-w-2xl">
+          <div class="inline-flex items-center gap-2 text-secondary font-label-caps text-label-caps mb-2">
+            <span class="material-symbols-outlined text-[18px]">category</span>
+            <span>ÜRÜN KATALOGU & TEKNİK DETAYLAR</span>
+          </div>
+          <h2 class="text-headline-xl font-headline-xl text-primary mb-2">Ürün Kategorileri ve Teknik Spesifikasyonlar</h2>
+          <p class="text-body-md font-body-md text-on-surface-variant">
+            Tüm ürünler fabrika çıkışlı, TSE ve ISO sertifikalıdır. Mikron kalınlığı ve ebat siparişe göre özelleştirilebilir.
+          </p>
+        </div>
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded bg-surface-container-lowest border border-outline-variant/50 text-body-sm font-body-sm text-on-surface self-start">
+          <span class="material-symbols-outlined text-secondary text-sm">inventory_2</span>
+          <span>4 Ana Kategoride Toptan Üretim</span>
+        </div>
+      </div>
+
+      <!-- Filter Tabs (çalışan filtre) -->
+      <div class="flex flex-wrap gap-2 mb-8 pb-4 border-b border-outline-variant/30" id="filter-tabs">
+        <button type="button" data-filter="all" class="filter-tab active px-4 py-2 rounded text-label-md font-label-md transition-colors bg-secondary text-on-secondary">Tümü</button>
+        {catalogs.map((c) => (
+          <button type="button" data-filter={c.slug} class="filter-tab px-4 py-2 rounded text-label-md font-label-md transition-colors bg-surface-container-lowest border border-outline-variant/50 hover:border-secondary text-on-surface-variant">{c.navLabel}</button>
+        ))}
+      </div>
+
+      <!-- Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6" id="catalog-grid">
+        {catalogs.map((c) => (
+          <article
+            data-category={c.slug}
+            class="catalog-card bg-surface-container-lowest rounded border border-outline-variant/50 overflow-hidden shadow-sm hover:shadow-md hover:border-secondary/50 transition-all flex flex-col group">
+            <div class="relative bg-surface-container h-72 overflow-hidden flex items-center justify-center">
+              <img alt={c.imageAlt} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" src={c.image} loading="lazy" />
+              <div class="absolute top-3 left-3 flex flex-wrap gap-2">
+                <span class="px-2.5 py-1 rounded bg-secondary/80 backdrop-blur-md text-on-primary text-label-caps font-label-caps border border-white/20">{c.imageBadges[0]}</span>
+                <span class="px-2.5 py-1 rounded bg-primary/80 backdrop-blur-md text-on-primary text-label-caps font-label-caps border border-white/20">{c.imageBadges[1]}</span>
+              </div>
+              <div class="absolute bottom-3 right-3 bg-surface-container-lowest/90 backdrop-blur-md px-2.5 py-1 rounded text-label-sm font-label-sm border border-outline-variant/40 text-on-surface">Model: {c.model}</div>
+            </div>
+            <div class="p-6 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between gap-2 mb-2">
+                  <span class="text-label-caps font-label-caps text-secondary uppercase">{c.category}</span>
+                  <span class="text-label-sm font-label-sm text-on-surface-variant font-mono">{c.pill}</span>
+                </div>
+                <h3 class="text-headline-md font-headline-md text-primary mb-3">
+                  <a href={`/urunler/${c.slug}`} class="hover:text-secondary transition-colors">{c.title}</a>
+                </h3>
+                <div class="bg-surface-container-low p-3.5 rounded border border-outline-variant/30 text-body-sm font-body-sm space-y-2 mb-6">
+                  {c.specs.map((s, i) => (
+                    <div class={`flex justify-between py-1 ${i < c.specs.length - 1 ? 'border-b border-outline-variant/20' : ''}`}>
+                      <span class="text-on-surface-variant">{s.label}</span>
+                      <span class="font-semibold text-on-surface">{s.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <a href={`/urunler/${c.slug}`} class="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-on-primary hover:bg-on-surface transition-colors rounded text-label-md font-label-md">
+                  <span class="material-symbols-outlined text-sm">menu_book</span>Kataloğu İncele</a>
+                <a href="/#teklif-al" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 border border-outline-variant hover:bg-surface-container transition-colors rounded text-label-md font-label-md text-on-surface">
+                  <span class="material-symbols-outlined text-sm text-secondary">request_quote</span>Teklif Al</a>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+    <!-- ================= CTA BANNER ================= -->
+    <section class="max-w-7xl mx-auto px-6 py-12">
+      <div class="bg-primary-container rounded-xl p-8 md:p-12 text-on-primary border border-outline-variant/20 relative overflow-hidden shadow-lg">
+        <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-secondary/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-8">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-secondary-fixed/20 border border-secondary-fixed/40 text-secondary-fixed mb-4">
+              <span class="material-symbols-outlined text-sm">factory</span>
+              <span class="text-label-caps font-label-caps">Müşteriye Özel Üretim Hattı</span>
+            </div>
+            <h2 class="text-headline-xl font-headline-xl mb-4 leading-tight">Özel Ebat veya Baskılı Üretim mi İstiyorsunuz?</h2>
+            <p class="text-body-lg font-body-lg text-inverse-on-surface/90 max-w-2xl leading-relaxed">Fabrikamızda istediğiniz renk, mikron ve baskı özelliklerinde aylık <strong>1.500 ton</strong> ekstrüzyon ve konfeksiyon kapasitesiyle özel sipariş üretiyoruz. Kurumsal logonuzla marka prestijinizi güçlendirin.</p>
+            <div class="flex flex-wrap gap-4 mt-6 text-label-md font-label-md text-inverse-on-surface">
+              <div class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary-fixed text-lg">check_circle</span>8 Renk Yüksek Hızlı Flekso Baskı</div>
+              <div class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary-fixed text-lg">check_circle</span>Özel Rulo Sarım &amp; Etiketleme</div>
+              <div class="flex items-center gap-2"><span class="material-symbols-outlined text-secondary-fixed text-lg">check_circle</span>Ücretsiz Numune Gönderimi</div>
+            </div>
+          </div>
+          <div class="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3.5">
+            <a class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-secondary text-on-secondary hover:bg-on-secondary-container transition-all rounded font-label-md text-label-md text-center shadow-md" href="/#teklif-al">
+              <span class="material-symbols-outlined">request_quote</span>Özel Üretim Teklifi Al</a>
+            <a class="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-surface-container-lowest text-on-surface hover:bg-surface transition-all rounded font-label-md text-label-md text-center" href="https://wa.me/905425115705">
+              <span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">chat</span>WhatsApp Satış Hattı</a>
+            <span class="text-center text-label-sm font-label-sm text-on-primary-container block">Genel Yanıt Süremiz: <strong>30 Dakika</strong></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FILTER SCRIPT (çalışan filtre) ================= -->
+    <script>
+      const tabs = Array.from(document.querySelectorAll('#filter-tabs .filter-tab'));
+      const cards = Array.from(document.querySelectorAll('#catalog-grid .catalog-card'));
+      const ACTIVE = 'filter-tab active px-4 py-2 rounded text-label-md font-label-md transition-colors bg-secondary text-on-secondary';
+      const INACTIVE = 'filter-tab px-4 py-2 rounded text-label-md font-label-md transition-colors bg-surface-container-lowest border border-outline-variant/50 hover:border-secondary text-on-surface-variant';
+      function applyFilter(filter) {
+        cards.forEach((card) => {
+          const show = filter === 'all' || card.getAttribute('data-category') === filter;
+          card.style.display = show ? '' : 'none';
+        });
+        tabs.forEach((tab) => {
+          tab.className = tab.getAttribute('data-filter') === filter ? ACTIVE : INACTIVE;
+        });
+      }
+      tabs.forEach((tab) => tab.addEventListener('click', () => applyFilter(tab.getAttribute('data-filter'))));
+    </script>
+  </main>
+</BaseLayout>

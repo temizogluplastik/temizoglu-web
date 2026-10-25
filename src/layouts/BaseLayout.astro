@@ -1,0 +1,64 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** 'home' -> kurumsal ana sayfa varyanti, 'catalog' -> urun katalogu varyanti */
+  variant?: 'home' | 'catalog';
+  /** body sinifi (template'te iki sayfa farkli selection renkleri kullaniyor) */
+  bodyClass?: string;
+}
+
+const {
+  title,
+  description = 'Temizoğlu Plastik — Endüstriyel polietilen ambalaj, baskılı poşet ve çöp torbası üretimi.',
+  variant = 'home',
+  bodyClass = 'bg-background text-on-surface antialiased font-body-md selection:bg-secondary selection:text-on-primary',
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Open Graph / Twitter Card (sosyal paylaşım görseli: logo) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Temizoğlu Plastik" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL('/logo.webp', Astro.site).href} />
+    <meta property="og:url" content={Astro.url} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL('/logo.webp', Astro.site).href} />
+
+    <!-- Fonts: Inter + Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Material Symbols Outlined (ikonlar) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <slot name="head" />
+  </head>
+  <body class={bodyClass}>
+    <Header variant={variant} />
+    <slot />
+    <Footer variant={variant} />
+  </body>
+</html>

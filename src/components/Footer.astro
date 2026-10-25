@@ -1,0 +1,11 @@
+---
+import FooterHome from './FooterHome.astro';
+import FooterCatalog from './FooterCatalog.astro';
+
+interface Props {
+  variant?: 'home' | 'catalog';
+}
+const { variant = 'home' } = Astro.props;
+---
+
+{variant === 'catalog' ? <FooterCatalog /> : <FooterHome />}

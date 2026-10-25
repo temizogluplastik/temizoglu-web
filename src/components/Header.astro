@@ -1,0 +1,11 @@
+---
+import HeaderHome from './HeaderHome.astro';
+import HeaderCatalog from './HeaderCatalog.astro';
+
+interface Props {
+  variant?: 'home' | 'catalog';
+}
+const { variant = 'home' } = Astro.props;
+---
+
+{variant === 'catalog' ? <HeaderCatalog /> : <HeaderHome />}
