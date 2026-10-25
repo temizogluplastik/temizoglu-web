@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { site, contact } from '../data/site';
 import '../styles/global.css';
 
 interface Props {
@@ -18,6 +19,57 @@ const {
   variant = 'home',
   bodyClass = 'bg-background text-on-surface antialiased font-body-md selection:bg-secondary selection:text-on-primary',
 } = Astro.props;
+
+// --- SEO: marka/organizasyon yapilandirmasi ---
+const siteUrl = (Astro.site?.href ?? 'https://temizogluplastik.com/').replace(/\/$/, '') + '/';
+const logoUrl = new URL('/logo.webp', Astro.site).href;
+const orgJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': ['Organization', 'LocalBusiness'],
+  '@id': `${siteUrl}#organization`,
+  name: site.name,
+  alternateName: [
+    'Temizoğlu Plastik',
+    'Temizoglu Plastik',
+    'temizoğluplastik',
+    'temizogluplastik',
+    'Temizoğlu Plastik Ambalaj',
+    site.legalName,
+  ],
+  legalName: site.legalName,
+  url: siteUrl,
+  logo: logoUrl,
+  image: logoUrl,
+  description: site.description,
+  telephone: '+905334980820',
+  email: contact.email,
+  priceRange: '$$$',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Kadirli',
+    addressRegion: 'Osmaniye',
+    addressCountry: 'TR',
+  },
+  areaServed: { '@type': 'Country', name: 'Türkiye' },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: '+905334980820',
+    contactType: 'sales',
+    email: contact.email,
+    areaServed: 'TR',
+    availableLanguage: ['Turkish', 'English'],
+  },
+};
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${siteUrl}#website`,
+  url: siteUrl,
+  name: site.name,
+  alternateName: ['temizoğluplastik', 'temizogluplastik'],
+  inLanguage: 'tr-TR',
+  publisher: { '@id': `${siteUrl}#organization` },
+};
 ---
 
 <!DOCTYPE html>
@@ -29,6 +81,12 @@ const {
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={Astro.url} />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta property="og:locale" content="tr_TR" />
+    <!-- Structured Data (JSON-LD): Organization / LocalBusiness / WebSite -->
+    <script type="application/ld+json" set:html={JSON.stringify(orgJsonLd)} />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} />
 
     <!-- Open Graph / Twitter Card (sosyal paylaşım görseli: logo) -->
     <meta property="og:type" content="website" />
