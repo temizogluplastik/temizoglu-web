@@ -44,7 +44,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <!-- Polymer Capabilities Highlights -->
 <div class="pt-4 grid grid-cols-3 gap-4 border-t border-surface-container-high w-full">
 <div class="flex flex-col">
-<span class="font-headline-sm text-headline-sm text-primary">Yıllık 18.000+ Ton</span>
+<span class="font-headline-sm text-headline-sm text-primary">Yüksek Tonaj</span>
 <span class="font-label-sm text-label-sm text-on-surface-variant">Polimer İşleme Gücü</span>
 </div>
 <div class="flex flex-col">
@@ -84,7 +84,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <div class="p-6 rounded-lg bg-white/5 border border-white/10 flex flex-col justify-between hover:bg-white/[0.08] transition-colors">
 <div>
 <div class="font-label-caps text-label-caps text-secondary-fixed tracking-wider mb-2">FABRİKA KAPASİTESİ</div>
-<div class="font-metric-num text-metric-num text-on-primary">1.500+ <span class="text-2xl font-normal text-secondary-fixed">Ton</span></div>
+<div class="font-metric-num text-metric-num text-on-primary">Yüksek <span class="text-2xl font-normal text-secondary-fixed">Hacim</span></div>
 </div>
 <p class="font-body-sm text-body-sm text-primary-fixed-dim mt-3">Aylık Yüksek Tonajlı Kesintisiz Üretim Kapasitesi</p>
 </div>
@@ -306,7 +306,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 <!-- Telefon & E-posta -->
 <div>
 <label class="block font-label-md text-label-md text-on-surface mb-2">Telefon / WhatsApp İletişim</label>
-<input class="w-full px-3.5 py-2.5 rounded border border-outline-variant bg-surface-container-lowest text-on-surface focus:outline-none focus:ring-1 focus:ring-secondary focus:border-secondary font-body-sm text-body-sm" name="telefon" placeholder="0542 511 57 05" required="" type="tel">
+<input class="w-full px-3.5 py-2.5 rounded border border-outline-variant bg-surface-container-lowest text-on-surface focus:outline-none focus:ring-1 focus:ring-secondary focus:border-secondary font-body-sm text-body-sm" name="telefon" placeholder="0533 498 08 20" required="" type="tel">
 </div>
 </div>
 <!-- Submit Action -->
@@ -373,7 +373,7 @@ Tesisimiz Kadirli / Osmaniye'de; ana lojistik akslarına ve 81 ile sevkiyat ağ�
 <span class="material-symbols-outlined text-secondary text-[20px] mt-0.5">call</span>
 <div>
 <div class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider mb-0.5">Telefon / WhatsApp</div>
-<a class="font-body-md text-body-md text-primary hover:text-secondary transition-colors" href="tel:05425115705">+90 542 511 57 05</a>
+<a class="font-body-md text-body-md text-primary hover:text-secondary transition-colors" href="tel:05334980820">+90 533 498 08 20</a>
 </div>
 </div>
 <div class="flex items-start gap-3">
@@ -428,7 +428,7 @@ Tesisimiz Kadirli / Osmaniye'de; ana lojistik akslarına ve 81 ile sevkiyat ağ�
         if (json.success) { form.reset(); showStatus('✓ Teklif talebiniz fabrikamıza iletildi. Satış temsilcimiz en kısa sürede sizinle iletişime geçecek.', true); }
         else { showStatus('Gönderim başarısız: ' + (json.message || 'bilinmeyen hata') + '. Lütfen tekrar deneyin.', false); }
       } catch (err) {
-        showStatus('Bağlantı hatası oluştu. Lütfen tekrar deneyin veya <a class="text-secondary underline font-medium" href="tel:05425115705">0542 511 57 05</a> numaralı telefondan bize ulaşın.', false);
+        showStatus('Bağlantı hatası oluştu. Lütfen tekrar deneyin veya <a class="text-secondary underline font-medium" href="tel:05334980820">0533 498 08 20</a> numaralı telefondan bize ulaşın.', false);
       } finally { if (btn) { btn.disabled = false; btn.innerHTML = btnHTML; } }
       return;
     }

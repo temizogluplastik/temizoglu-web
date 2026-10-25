@@ -17,9 +17,9 @@ export const site = {
 } as const;
 
 export const contact = {
-  phoneDisplay: '+90 542 511 57 05',
-  phoneRaw: '05425115705',
-  whatsapp: '905425115705',
+  phoneDisplay: '+90 533 498 08 20',
+  phoneRaw: '05334980820',
+  whatsapp: '905334980820',
   email: 'temizogluplastik@gmail.com',
   address: 'Osmaniye Organize Sanayi Bölgesi, 3. Cadde No: 14, Toprakkale / Osmaniye',
 } as const;

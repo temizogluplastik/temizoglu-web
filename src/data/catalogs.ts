@@ -53,7 +53,7 @@ export const metrics: MetricBadge[] = [
 
 /** Banner üstü ortak tesis etiketi. */
 export const facilityBadge =
-  'Kadirli, Osmaniye Üretim Tesisi | Aylık 1.500 Ton Kapasite';
+  'Kadirli, Osmaniye Üretim Tesisi | Yüksek Tonajlı Üretim Kapasitesi';
 
 export const catalogs: Catalog[] = [
   {
